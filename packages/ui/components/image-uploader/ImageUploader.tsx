@@ -1,6 +1,7 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import type { FormEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
+import { FileUploader } from "react-drag-drop-files";
 import Cropper from "react-easy-crop";
 
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -116,11 +117,13 @@ export default function ImageUploader({
   target,
   id,
   buttonMsg,
-  handleAvatarChange,
+  handleAvatarChange, // This and everything upwards should remain unchanged
   ...props
 }: ImageUploaderProps) {
+  // UX proposal: replace the current image and "Choose a file..." label by a drop zone using `react-drag-drop-files`
+
   const { t } = useLocale();
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null); // TODO: probably not needed anymore
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const [{ result }, setFile] = useFileReader({
@@ -132,12 +135,12 @@ export default function ImageUploader({
   }, [props.imageSrc]);
 
   const onInputFile = (e: FileEvent<HTMLInputElement>) => {
+    // TODO: adjust the interface (takes a `File`)
     if (!e.target.files?.length) {
       return;
     }
 
     const limit = 5 * 1000000; // max limit 5mb
-    const file = e.target.files[0];
 
     if (file.size > limit) {
       showToast(t("image_size_limit_exceed"), "error");
@@ -176,31 +179,11 @@ export default function ImageUploader({
       <DialogContent title={t("upload_target", { target })}>
         <div className="mb-4">
           <div className="cropper mt-6 flex flex-col items-center justify-center p-8">
-            {!result && (
-              <div className="bg-muted flex h-20 max-h-20 w-20 items-center justify-start rounded-full">
-                {!imageSrc && (
-                  <p className="text-emphasis w-full text-center text-sm sm:text-xs">
-                    {t("no_target", { target })}
-                  </p>
-                )}
-                {imageSrc && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img className="h-20 w-20 rounded-full" src={imageSrc} alt={target} />
-                )}
-              </div>
-            )}
+            {!result && <FileUploader handleChange={onInputFile} />}{" "}
+            {/* TODO: UI properties for FileUploader */}
             {result && <CropContainer imageSrc={result as string} onCropComplete={setCroppedAreaPixels} />}
-            <label className="bg-subtle hover:bg-muted hover:text-emphasis border-subtle text-default mt-8 rounded-sm border px-3 py-1 text-xs font-medium leading-4 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-1">
-              <input
-                onInput={onInputFile}
-                type="file"
-                name={id}
-                placeholder={t("upload_image")}
-                className="text-default pointer-events-none absolute mt-4 opacity-0 "
-                accept="image/*"
-              />
-              {t("choose_a_file")}
-            </label>
+            {/* Proposal: remove the "Choose a file..." button at the crop step. We could also strictly keep the UX
+            as-is and make the button reset `result`. */}
           </div>
         </div>
         <DialogFooter className="relative">
