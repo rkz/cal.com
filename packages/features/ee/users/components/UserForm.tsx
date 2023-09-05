@@ -123,12 +123,10 @@ export const UserForm = ({
               <div className="ml-4">
                 <ImageUploader
                   target="avatar"
-                  id="avatar-upload"
                   buttonMsg="Change avatar"
                   handleAvatarChange={(newAvatar) => {
                     form.setValue("avatar", newAvatar, { shouldDirty: true });
                   }}
-                  imageSrc={value || undefined}
                 />
               </div>
             </>

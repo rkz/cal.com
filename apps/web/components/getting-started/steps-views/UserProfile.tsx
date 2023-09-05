@@ -118,7 +118,6 @@ const UserProfile = () => {
         <div className="flex items-center px-4">
           <ImageUploader
             target="avatar"
-            id="avatar-upload"
             buttonMsg={t("add_profile_photo")}
             handleAvatarChange={(newAvatar) => {
               if (avatarRef.current) {
@@ -134,7 +133,6 @@ const UserProfile = () => {
               updateProfileHandler(ev2 as unknown as FormEvent<HTMLFormElement>);
               setImageSrc(newAvatar);
             }}
-            imageSrc={imageSrc}
           />
         </div>
       </div>

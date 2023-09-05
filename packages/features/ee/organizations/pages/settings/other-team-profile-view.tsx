@@ -183,12 +183,10 @@ const OtherTeamProfileView = () => {
                       <div className="ms-4">
                         <ImageUploader
                           target="avatar"
-                          id="avatar-upload"
                           buttonMsg={t("update")}
                           handleAvatarChange={(newLogo) => {
                             form.setValue("logo", newLogo);
                           }}
-                          imageSrc={value}
                         />
                       </div>
                     </>

@@ -410,12 +410,10 @@ const ProfileForm = ({
               <div className="ms-4">
                 <ImageUploader
                   target="avatar"
-                  id="avatar-upload"
                   buttonMsg={t("change_avatar")}
                   handleAvatarChange={(newAvatar) => {
                     formMethods.setValue("avatar", newAvatar, { shouldDirty: true });
                   }}
-                  imageSrc={value || undefined}
                 />
               </div>
             </>

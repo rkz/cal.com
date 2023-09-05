@@ -145,13 +145,11 @@ export const CreateANewTeamForm = () => {
                   <div className="ms-4">
                     <ImageUploader
                       target="avatar"
-                      id="avatar-upload"
                       buttonMsg={t("update")}
                       handleAvatarChange={(newAvatar: string) => {
                         newTeamFormMethods.setValue("logo", newAvatar);
                         createTeamMutation.reset();
                       }}
-                      imageSrc={value}
                     />
                   </div>
                 </div>
