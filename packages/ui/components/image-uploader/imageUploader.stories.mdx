@@ -33,21 +33,18 @@ Below are the props for `Image uploader`
       });
     }}
     args={{
-      id: "image-1",
       buttonMsg: "upload",
       target: "target",
       handleAvatarChange: (src) => {
         console.debug(src);
       },
     }}>
-    {({ id, buttonMsg, handleAvatarChange, imageSrc, target }) => (
+    {({ buttonMsg, handleAvatarChange, target }) => (
       <VariantsTable titles={["Default"]} columnMinWidth={150}>
         <VariantRow>
           <ImageUploader
-            id={id}
             buttonMsg={buttonMsg}
             handleAvatarChange={handleAvatarChange}
-            imageSrc={imageSrc}
             target={target}
           />
         </VariantRow>

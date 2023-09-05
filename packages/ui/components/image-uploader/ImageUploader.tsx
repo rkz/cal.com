@@ -112,24 +112,13 @@ function CropContainer({
   );
 }
 
-export default function ImageUploader({
-  target,
-  id,
-  buttonMsg,
-  handleAvatarChange,
-  ...props
-}: ImageUploaderProps) {
+export default function ImageUploader({ target, buttonMsg, handleAvatarChange }: ImageUploaderProps) {
   const { t } = useLocale();
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const [{ result }, setFile] = useFileReader({
     method: "readAsDataURL",
   });
-
-  useEffect(() => {
-    if (props.imageSrc) setImageSrc(props.imageSrc);
-  }, [props.imageSrc]);
 
   const showCroppedImage = useCallback(
     async (croppedAreaPixels: Area | null) => {
@@ -139,7 +128,6 @@ export default function ImageUploader({
           result as string /* result is always string when using readAsDataUrl */,
           croppedAreaPixels
         );
-        setImageSrc(croppedImage);
         handleAvatarChange(croppedImage);
       } catch (e) {
         console.error(e);
