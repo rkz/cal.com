@@ -1,5 +1,4 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
-import type { FormEvent } from "react";
 import { useCallback, useEffect, useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Cropper from "react-easy-crop";
@@ -60,16 +59,11 @@ const useFileReader = (options: UseFileReaderProps) => {
 };
 
 type ImageUploaderProps = {
-  id: string;
   buttonMsg: string;
   handleAvatarChange: (imageSrc: string) => void;
   imageSrc?: string;
   target: string;
 };
-
-interface FileEvent<T = Element> extends FormEvent<T> {
-  target: EventTarget & T;
-}
 
 // This is separate to prevent loading the component until file upload
 function CropContainer({
